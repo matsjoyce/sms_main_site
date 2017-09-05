@@ -1,4 +1,7 @@
 #!/bin/bash
 
 pip2 install -r requirements-vendor.txt -t lib/
+
+rm -r lib/PIL
+
 sudo pip2 install -r requirements.txt

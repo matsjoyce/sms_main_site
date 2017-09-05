@@ -6,8 +6,10 @@ from mezzanine.core.templatetags import mezzanine_tags
 from urllib import quote, unquote
 import os
 import StringIO
+import logging
 
 register = mezzanine_tags.register
+logger = logging.getLogger(__name__)
 
 
 @register.simple_tag
@@ -27,6 +29,9 @@ def thumbnail(image_url, width, height, upscale=True, quality=95, left=.5,
     try:
         from PIL import Image, ImageFile, ImageOps
     except ImportError:
+        logger.error("Cannot import PIL")
+        import traceback
+        traceback.print_exc()
         return ""
 
     image_url = unquote(str(image_url)).split("?")[0]
@@ -53,11 +58,6 @@ def thumbnail(image_url, width, height, upscale=True, quality=95, left=.5,
     # thumbnails that may match a new image name.
     thumb_dir = os.path.join(settings.MEDIA_ROOT, image_dir,
                              settings.THUMBNAILS_DIR_NAME, image_name)
-    if not default_storage.exists(thumb_dir):
-        try:
-            default_storage.makedirs(thumb_dir)
-        except OSError:
-            pass
 
     thumb_path = os.path.join(thumb_dir, thumb_name)
     thumb_url = "%s/%s/%s" % (settings.THUMBNAILS_DIR_NAME,
@@ -81,6 +81,9 @@ def thumbnail(image_url, width, height, upscale=True, quality=95, left=.5,
     elif not default_storage.exists(image_url):
         # Requested image does not exist, just return its URL.
         return default_storage.url(image_url)
+
+
+    logger.info("Creating thumbnail for %s", image_url)
 
     f = default_storage.open(image_url)
     try:

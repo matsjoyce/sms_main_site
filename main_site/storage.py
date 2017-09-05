@@ -120,7 +120,7 @@ class GoogleCloudStorage(Storage):
             local_base_url = getattr(settings, "GOOGLE_CLOUD_STORAGE_DEV_URL",
                                      "http://localhost:8000/blobstore/blob/")
             return local_base_url + key + "?display=inline"
-        return self.base_url + "/" + name
+        return self.base_url + self.location + "/" + name
 
     def statFile(self, name):
         filename = self.process_filename(name)

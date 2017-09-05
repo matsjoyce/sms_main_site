@@ -27,6 +27,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 import sys
+import logging
 from google.appengine.api import app_identity
 from keys import *
 
@@ -209,8 +210,45 @@ else:
 DEFAULT_FILE_STORAGE = "main_site.storage.GoogleCloudStorage"
 MEDIA_ROOT = ""
 GOOGLE_CLOUD_STORAGE_BUCKET = "/" + app_identity.get_default_gcs_bucket_name()
-GOOGLE_CLOUD_STORAGE_URL = "http://storage.googleapis.com/bucket"
+GOOGLE_CLOUD_STORAGE_URL = "http://storage.googleapis.com"
 GOOGLE_CLOUD_STORAGE_DEFAULT_CACHE_CONTROL = "public, max-age: 7200"
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'django.server': {
+            '()': 'django.utils.log.ServerFormatter',
+            'format': '[%(server_time)s] %(message)s',
+        }
+    },
+    'handlers': {
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+        },
+        'django.server': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'django.server',
+        }
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': 'INFO',
+        },
+        'django.server': {
+            'handlers': ['django.server'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        "": {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+        }
+    }
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/

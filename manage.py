@@ -16,6 +16,8 @@
 import os
 import sys
 
+sys.path.insert(0, "./lib")
+
 if __name__ == "__main__":
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "main_site.settings")
 

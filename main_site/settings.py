@@ -28,7 +28,10 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 import os
 import sys
 import logging
-from google.appengine.api import app_identity
+try:
+    from google.appengine.api import app_identity
+except ImportError:
+    app_identity = None
 from keys import *
 
 PROJECT_APP_PATH = os.path.dirname(os.path.abspath(__file__))
@@ -59,6 +62,11 @@ AUTHENTICATION_BACKENDS = ("mezzanine.core.auth_backends.MezzanineBackend",)
 
 USE_MODELTRANSLATION = False
 
+# Store these package names here as they may change in the future since
+# at the moment we are using custom forks of them.
+PACKAGE_NAME_FILEBROWSER = "filebrowser_safe"
+PACKAGE_NAME_GRAPPELLI = "grappelli_safe"
+
 INSTALLED_APPS = (
     "django.contrib.admin",
     "django.contrib.auth",
@@ -79,20 +87,15 @@ INSTALLED_APPS = (
     "mezzanine.twitter",
 #    "mezzanine.accounts",
 #    "mezzanine.mobile",
-    "main_site.apps"
+    "main_site.apps",
+    "compressor",
+    PACKAGE_NAME_FILEBROWSER,
+    PACKAGE_NAME_GRAPPELLI,
 )
-
-# Store these package names here as they may change in the future since
-# at the moment we are using custom forks of them.
-PACKAGE_NAME_FILEBROWSER = "filebrowser_safe"
-PACKAGE_NAME_GRAPPELLI = "grappelli_safe"
 
 OPTIONAL_APPS = (
     "debug_toolbar",
     "django_extensions",
-    "compressor",
-    PACKAGE_NAME_FILEBROWSER,
-    PACKAGE_NAME_GRAPPELLI,
 )
 
 MIDDLEWARE = (
@@ -209,9 +212,10 @@ else:
 
 DEFAULT_FILE_STORAGE = "main_site.storage.GoogleCloudStorage"
 MEDIA_ROOT = ""
-GOOGLE_CLOUD_STORAGE_BUCKET = "/" + app_identity.get_default_gcs_bucket_name()
-GOOGLE_CLOUD_STORAGE_URL = "http://storage.googleapis.com"
-GOOGLE_CLOUD_STORAGE_DEFAULT_CACHE_CONTROL = "public, max-age: 7200"
+if app_identity:
+    GOOGLE_CLOUD_STORAGE_BUCKET = "/" + app_identity.get_default_gcs_bucket_name()
+    GOOGLE_CLOUD_STORAGE_URL = "http://storage.googleapis.com"
+    GOOGLE_CLOUD_STORAGE_DEFAULT_CACHE_CONTROL = "public, max-age: 7200"
 
 LOGGING = {
     'version': 1,
@@ -275,6 +279,37 @@ SITE_ID = 1
 
 STATIC_ROOT = 'static'
 STATIC_URL = '/static/'
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
+)
+COMPRESS_ENABLED = True
+COMPRESS_OFFLINE = True
+COMPRESS_PRECOMPILERS = (
+    ('text/less', 'lessc {infile} {outfile}'),
+)
+COMPRESS_CSS_FILTERS = ["compressor.filters.yuglify.YUglifyCSSFilter"]
+COMPRESS_JS_FILTERS = ["compressor.filters.yuglify.YUglifyJSFilter"]
+
+
+def get_mezzanine_settings():
+    """
+    Returns the value of the mezzanine.conf.context_processors.settings context
+    processor. Context processors usually can only be run during a request, but
+    luckily, mezzanine ignores the request parameter, so we don't have to worry
+    about it.
+    """
+    from mezzanine.conf.context_processors import settings
+    return settings()['settings']
+
+
+COMPRESS_OFFLINE_CONTEXT = {
+    'STATIC_URL': STATIC_URL,
+
+    # some mezzanine templates require the settings.
+    'settings': get_mezzanine_settings
+}
 
 CACHE_MIDDLEWARE_KEY_PREFIX = PROJECT_APP
 

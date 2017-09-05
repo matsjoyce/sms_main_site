@@ -1,7 +1,7 @@
 #!/bin/bash
 
-pip2 install -r requirements-vendor.txt -t lib/
+pip2 install -r requirements-vendor.txt -t lib/ --upgrade
 
 rm -r lib/PIL
 
-sudo pip2 install -r requirements.txt
+sudo pip2 install -r requirements.txt --upgrade

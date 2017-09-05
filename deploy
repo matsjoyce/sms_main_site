@@ -1,4 +1,4 @@
 #!/bin/bash
 
 ./manage.py collectstatic --noinput
-gclould app deploy
+python2 ../google_appengine/appcfg.py update .

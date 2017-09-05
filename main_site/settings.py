@@ -188,8 +188,7 @@ if sys.on_production:
             'ENGINE': 'django.db.backends.mysql',
             'HOST': '/cloudsql/latvia-123011:django-sms',
             'NAME': 'django_main_site',
-            'USER': DB_USERNAME,
-            'PASSWORD': DB_PASSWORD,
+            'USER': "root"
         }
     }
 else:
@@ -201,7 +200,7 @@ else:
             'HOST': '173.194.253.108',
             'NAME': 'django_main_site',
             'USER': DB_USERNAME,
-            'PASSWORD': DB_PASSWORD,
+            'PASSWORD': DB_PASSWORD
         }
     }
 

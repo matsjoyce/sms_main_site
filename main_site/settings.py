@@ -27,6 +27,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 import sys
+from google.appengine.api import app_identity
 from keys import *
 
 PROJECT_APP_PATH = os.path.dirname(os.path.abspath(__file__))
@@ -77,6 +78,7 @@ INSTALLED_APPS = (
     "mezzanine.twitter",
     # "mezzanine.accounts",
     # "mezzanine.mobile",
+    "main_site.apps"
 )
 
 # Store these package names here as they may change in the future since
@@ -203,6 +205,12 @@ else:
             'PASSWORD': DB_PASSWORD
         }
     }
+
+DEFAULT_FILE_STORAGE = "main_site.storage.GoogleCloudStorage"
+MEDIA_ROOT = ""
+GOOGLE_CLOUD_STORAGE_BUCKET = "/" + app_identity.get_default_gcs_bucket_name()
+GOOGLE_CLOUD_STORAGE_URL = "http://storage.googleapis.com/bucket"
+GOOGLE_CLOUD_STORAGE_DEFAULT_CACHE_CONTROL = "public, max-age: 7200"
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/

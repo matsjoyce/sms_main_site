@@ -214,7 +214,7 @@ DEFAULT_FILE_STORAGE = "main_site.storage.GoogleCloudStorage"
 MEDIA_ROOT = ""
 if app_identity:
     GOOGLE_CLOUD_STORAGE_BUCKET = "/" + app_identity.get_default_gcs_bucket_name()
-    GOOGLE_CLOUD_STORAGE_URL = "http://storage.googleapis.com"
+    GOOGLE_CLOUD_STORAGE_URL = "https://storage.googleapis.com"
     GOOGLE_CLOUD_STORAGE_DEFAULT_CACHE_CONTROL = "public, max-age: 7200"
 
 LOGGING = {

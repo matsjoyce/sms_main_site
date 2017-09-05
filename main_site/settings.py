@@ -73,12 +73,12 @@ INSTALLED_APPS = (
     "mezzanine.core",
     "mezzanine.generic",
     "mezzanine.pages",
-    "mezzanine.blog",
+#    "mezzanine.blog",
     "mezzanine.forms",
     "mezzanine.galleries",
     "mezzanine.twitter",
-    # "mezzanine.accounts",
-    # "mezzanine.mobile",
+#    "mezzanine.accounts",
+#    "mezzanine.mobile",
     "main_site.apps"
 )
 

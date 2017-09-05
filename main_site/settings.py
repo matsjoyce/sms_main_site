@@ -290,7 +290,7 @@ COMPRESS_PRECOMPILERS = (
     ('text/less', 'lessc {infile} {outfile}'),
 )
 COMPRESS_CSS_FILTERS = ["compressor.filters.yuglify.YUglifyCSSFilter"]
-COMPRESS_JS_FILTERS = ["compressor.filters.yuglify.YUglifyJSFilter"]
+COMPRESS_JS_FILTERS = ["compressor.filters.jsmin.SlimItFilter"]
 
 
 def get_mezzanine_settings():

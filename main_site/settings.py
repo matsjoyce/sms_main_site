@@ -319,7 +319,7 @@ TINYMCE_SETUP_JS = "js/tinymce_setup.js"
 CACHE_MIDDLEWARE_KEY_PREFIX = PROJECT_APP
 
 if sys.on_production:
-    import settings_live
+    from settings_live import *
 
 # set_dynamic_settings() will rewrite globals based on what has been
 # defined so far, in order to provide some better defaults where

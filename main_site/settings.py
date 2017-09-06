@@ -68,6 +68,7 @@ PACKAGE_NAME_FILEBROWSER = "filebrowser_safe"
 PACKAGE_NAME_GRAPPELLI = "grappelli_safe"
 
 INSTALLED_APPS = (
+    "theme",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -289,8 +290,10 @@ COMPRESS_OFFLINE = True
 COMPRESS_PRECOMPILERS = (
     ('text/less', 'lessc {infile} {outfile}'),
 )
-COMPRESS_CSS_FILTERS = ["compressor.filters.yuglify.YUglifyCSSFilter"]
-COMPRESS_JS_FILTERS = ["compressor.filters.jsmin.SlimItFilter"]
+COMPRESS_CSS_FILTERS = ["compressor.filters.css_default.CssAbsoluteFilter",
+                        "compressor.filters.yuglify.YUglifyCSSFilter"]
+if os.getenv("COMPRESS_SLOW", ""):
+    COMPRESS_JS_FILTERS = ["compressor.filters.jsmin.SlimItFilter"]
 
 
 def get_mezzanine_settings():
@@ -310,6 +313,8 @@ COMPRESS_OFFLINE_CONTEXT = {
     # some mezzanine templates require the settings.
     'settings': get_mezzanine_settings
 }
+
+TINYMCE_SETUP_JS = "js/tinymce_setup.js"
 
 CACHE_MIDDLEWARE_KEY_PREFIX = PROJECT_APP
 

@@ -1,5 +1,4 @@
 #!/bin/bash
 
-./manage.py collectstatic --noinput --clear
-./manage.py compress
+./build
 python2 ../google_appengine/appcfg.py update .

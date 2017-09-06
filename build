@@ -1,0 +1,10 @@
+#!/bin/bash
+
+set -e
+
+if [ "$1" != "--fast" ]
+    then export COMPRESS_SLOW=1
+fi
+
+./manage.py collectstatic --noinput --clear
+./manage.py compress

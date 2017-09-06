@@ -1,0 +1,55 @@
+@import "variables.less";
+
+.breadcrumb::before {
+    position: absolute;
+    border-bottom: @border-color 1px solid;
+    width: 200%;
+    content: "";
+    display: inline-block;
+    top: -12px;
+    left: -50%;
+}
+
+.breadcrumb {
+    position: relative;
+    background: transparent;
+    padding: 0;
+    font-size: 11px;
+    color: @brand-primary;
+}
+
+.breadcrumb-start {
+    padding-right: 8px;
+}
+
+.page-top-row > div {
+    float: none;
+    display: inline-block;
+    vertical-align: bottom;
+}
+
+.main-content {
+    border-bottom: @border-color 1px solid;
+}
+
+.nav-list {
+    margin-left: 8px;
+    font-size: 13px;
+}
+
+.panel {
+    box-shadow: none;
+
+    .nav > li > a {
+        padding: 3px 4px;
+
+        &:hover,
+        &:focus {
+            color: @navbar-default-link-hover-color;
+        }
+    }
+
+    .nav > li.active > a {
+        color: @navbar-default-link-hover-color;
+    }
+}

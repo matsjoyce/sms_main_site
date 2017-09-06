@@ -287,13 +287,15 @@ STATICFILES_FINDERS = (
 )
 COMPRESS_ENABLED = True
 COMPRESS_OFFLINE = True
-COMPRESS_PRECOMPILERS = (
-    ('text/less', 'lessc {infile} {outfile}'),
-)
-COMPRESS_CSS_FILTERS = ["compressor.filters.css_default.CssAbsoluteFilter",
-                        "compressor.filters.yuglify.YUglifyCSSFilter"]
+COMPRESS_PRECOMPILERS = []
+COMPRESS_CSS_FILTERS = ["compressor.filters.css_default.CssAbsoluteFilter"]
+
 if os.getenv("COMPRESS_SLOW", ""):
+    COMPRESS_CSS_FILTERS.append("compressor.filters.yuglify.YUglifyCSSFilter")
     COMPRESS_JS_FILTERS = ["compressor.filters.jsmin.SlimItFilter"]
+    COMPRESS_PRECOMPILERS.append(('text/less', 'lessc {infile} {outfile}'))
+else:
+    COMPRESS_PRECOMPILERS.append(('text/less', 'lessc {infile} {outfile} --source-map-less-inline --source-map-map-inline'))
 
 
 def get_mezzanine_settings():
@@ -315,6 +317,7 @@ COMPRESS_OFFLINE_CONTEXT = {
 }
 
 TINYMCE_SETUP_JS = "js/tinymce_setup.js"
+FILEBROWSER_ESCAPED_EXTENSIONS = []
 
 CACHE_MIDDLEWARE_KEY_PREFIX = PROJECT_APP
 

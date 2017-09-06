@@ -99,7 +99,7 @@ ENV/
 .mypy_cache/
 
 # django
-static/
+/static/
 lib/
 
 # kdevelop

@@ -3,8 +3,11 @@
 set -e
 
 if [ "$1" != "--fast" ]
-    then export COMPRESS_SLOW=1
+    then
+        export COMPRESS_SLOW=1
+        ./manage.py collectstatic --noinput --clear
+    else
+        ./manage.py collectstatic --noinput
 fi
 
-./manage.py collectstatic --noinput --clear
 ./manage.py compress

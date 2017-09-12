@@ -10,10 +10,29 @@ body {
 }
 
 footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: @footer-height;
-  padding-top: 20px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: @footer-height;
+    padding-top: 20px;
+
+    .row {
+        padding-left: 16px;
+    }
+
+    @media (max-width: @screen-xs-min) {
+        .nm-footer-sep {
+            display: none;
+        }
+
+        .footer-links {
+            display: block;
+        }
+    }
 }
 
+.footer-text {
+    color: @brand-primary;
+    font-size: 13px;
+    padding-top: 2px;
+}

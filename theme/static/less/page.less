@@ -1,13 +1,12 @@
 @import "variables.less";
 
-.breadcrumb::before {
+.breadcrumb::before, .panel::before {
     position: absolute;
     border-bottom: @border-color 1px solid;
-    width: 200%;
+    width: 100%;
     content: "";
     display: inline-block;
     top: -12px;
-    left: -50%;
 }
 
 .breadcrumb {
@@ -20,13 +19,13 @@
 
 .breadcrumb-start {
     padding-right: 8px;
-}
+}/*
 
 .page-top-row > div {
     float: none;
     display: inline-block;
     vertical-align: bottom;
-}
+}*/
 
 .main-content {
     border-bottom: @border-color 1px solid;

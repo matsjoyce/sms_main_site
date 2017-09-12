@@ -2,6 +2,17 @@
 
 .title {
     margin: 43px 15px 25px;
+
+    @media (max-width: @grid-float-breakpoint) {
+        text-align: center;
+
+    }
+
+    @media (min-width: @grid-float-breakpoint) {
+        br {
+            display: none;
+        }
+    }
 }
 
 .title-brand {

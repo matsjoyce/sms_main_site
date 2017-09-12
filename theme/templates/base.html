@@ -51,7 +51,9 @@
 <div class="title">
     {% block navbar_title %}
     {% if settings.SITE_ICON %}<img class="title-icon" src="{{ settings.SITE_ICON }}"></img>{% endif %}
+    <br clear="all" />
     {% if settings.SITE_TITLE %}<a class="title-brand" href="/">{{ settings.SITE_TITLE }}</a>{% endif %}
+    <br clear="all" />
     {% if settings.SITE_TAGLINE %}<p class="title-text visible-lg">{{ settings.SITE_TAGLINE }}</p>{% endif %}
     {% endblock%}
 </div>
@@ -74,7 +76,7 @@
 <div class="container">
 <div class="row page-top-row">
 
-<div class="col-md-2 left">
+<div class="col-md-2 left visible-lg-block">
 </div>
 
 <div class="col-md-7 middle">
@@ -98,7 +100,7 @@
 
 <div class="row">
 
-<div class="col-md-2 left">
+<div class="col-md-2 left visible-lg-block">
     {% block left_panel %}
     <div class="panel tree">{% page_menu "pages/menus/tree.html" %}</div>
     {% endblock %}
@@ -121,19 +123,18 @@
 <div class="container">
 
 <div class="row">
-<p class="site-info text-center">
-    {% trans "Powered by" %}
-    <a href="http://mezzanine.jupo.org">Mezzanine</a>{% ifinstalled cartridge.shop %},
-    <a href="http://cartridge.jupo.org">Cartridge</a>{% endifinstalled %}
-    {% trans "and" %}
-    <a href="http://www.djangoproject.com">Django</a>
-    <span class="separator">|</span>
-    {% trans "Theme by" %} <a target="_blank" href="http://getbootstrap.com">Bootstrap</a>
-    {% ifinstalled mezzanine.mobile %}
-    <span class="separator">|</span>
-    <a href="{% url "set_device" "mobile" %}?next={{ request.path }}">{% trans "View Mobile Site" %}</a>
-    {% endifinstalled %}
-</p>
+    <div style="height: 35px; vertical-align: middle; line-height: 35px; font-family: &quot;BentonSans&quot;, Tahoma, Geneva, sans-serif; margin-top: 8px;">
+        <span style="letter-spacing: 8px; font-size: 24px;">S<b>SPX</b></span>
+        <img style="height: 35px; vertical-align: middle; padding-right: 4px; top: -9px; position: relative;" src="{{ settings.SITE_ICON }}"></img>
+        <span style="position: relative; top: -3px; font-size: 15px; ">
+            Society of <b>Saint Pius X</b>
+        </span>
+    </div>
+    <div class="footer-text">
+        Copyright <a href="http://fsspx.uk/">2016 SSPX Society of Saint Pius X</a><span class="nm-footer-sep"> | </span><span class="footer-links">
+        Powered by <a href="http://mezzanine.jupo.org">Mezzanine</a> and <a href="http://www.djangoproject.com">Django</a>
+        </span>
+    </div>
 </div>
 </div>
 </footer>

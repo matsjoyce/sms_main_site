@@ -9,6 +9,9 @@ handlers:
    static_dir: static/
    application_readable: true
    expiration: 1d
+ - url: /favicon.ico
+   static_file: static/img/favicon.ico
+   expiration: 1d
  - url: .*
    script: main_site.wsgi.application
 
